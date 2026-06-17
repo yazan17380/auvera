@@ -8,7 +8,7 @@ class AppColors {
 
   static const Color background = Color(0xFFFFFFFF); // Soft dusty
   static const Color cardWhite = Color(0xFFF5F4F5);
-  static const Color primary = Color.fromARGB(255, 100, 88, 170); // (buttons, key text)
+  static const Color primary = Color.fromARGB(255, 61, 52, 114); // (buttons, key text)
   static const Color primaryDark = Color(0xFF8344AB);
   static const Color textPrimary = Color(0xFF9895C9); // headings
   static const Color textSecondary = Color(0xFF8C7E78); // body text

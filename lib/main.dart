@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'theme/app_theme.dart';
-import 'screens/login_screen.dart';
+import 'screens/onboarding_screen.dart';
 
 void main() {
   runApp(const AuveraApp());
@@ -15,7 +15,7 @@ class AuveraApp extends StatelessWidget {
       title: 'Auvera',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const LoginScreen(),
+      home: const OnboardingScreen(),
     );
   }
 }

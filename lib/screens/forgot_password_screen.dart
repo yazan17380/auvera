@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../widgets/auth_text_field.dart';
-import 'reset_password_screen.dart';
+import 'reset_otp_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -36,14 +36,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
-      // Placeholder for future backend integration (send reset code)
+      // Backend integration note:
+      // POST /api/forgot-password with { "email": _emailController.text }
       Future.delayed(const Duration(seconds: 1), () {
         if (!mounted) return;
         setState(() => _isLoading = false);
 
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (_) => ResetPasswordScreen(
+            builder: (_) => ResetOtpScreen(
               email: _emailController.text.trim(),
             ),
           ),

@@ -6,6 +6,8 @@ class Product {
   final int id;
   final String name;
   final String imageUrl;
+  final List<String> images;
+  final String description;
   final double price;
   final double? oldPrice; // for discounted items, null if no discount
   final double rating;
@@ -17,6 +19,8 @@ class Product {
     required this.id,
     required this.name,
     required this.imageUrl,
+    this.images = const [],
+    this.description = '',
     required this.price,
     this.oldPrice,
     required this.rating,
@@ -26,6 +30,15 @@ class Product {
   });
 
   bool get hasDiscount => oldPrice != null && oldPrice! > price;
+
+  /// Falls back to the single [imageUrl] if no gallery images are provided
+  List<String> get gallery => images.isNotEmpty ? images : [imageUrl];
+
+  /// Falls back to a generic description if none was provided
+  String get displayDescription => description.isNotEmpty
+      ? description
+      : 'A carefully selected piece from our $categoryName collection, '
+          'combining quality materials with a comfortable, modern fit.';
 }
 
 /// Mock product data for UI building (no backend connection yet)
@@ -34,6 +47,13 @@ final List<Product> mockProducts = [
     id: 1,
     name: 'Beautiful Blazer',
     imageUrl: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400',
+    images: [
+      'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600',
+      'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600',
+      'https://images.unsplash.com/photo-1551803091-e20673f15770?w=600',
+    ],
+    description:
+        'A timeless blazer crafted from premium fabric, designed for both comfort and elegance. Perfect for office wear or evening outings, featuring a tailored fit and classic button details.',
     price: 54,
     oldPrice: 70,
     rating: 4.8,

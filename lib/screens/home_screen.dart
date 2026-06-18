@@ -3,6 +3,10 @@ import '../theme/app_theme.dart';
 import '../models/product.dart';
 import '../widgets/product_card.dart';
 import '../widgets/filter_bottom_sheet.dart';
+import '../services/wishlist_store.dart';
+import '../services/cart_store.dart';
+import 'product_details_screen.dart';
+import 'cart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,17 +16,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final Set<int> _favoriteProductIds = {};
   FilterResult? _activeFilter;
 
-  void _toggleFavorite(int productId) {
-    setState(() {
-      if (_favoriteProductIds.contains(productId)) {
-        _favoriteProductIds.remove(productId);
-      } else {
-        _favoriteProductIds.add(productId);
-      }
-    });
+  @override
+  void initState() {
+    super.initState();
+    WishlistStore.instance.addListener(_onStoreChanged);
+    CartStore.instance.addListener(_onStoreChanged);
+  }
+
+  @override
+  void dispose() {
+    WishlistStore.instance.removeListener(_onStoreChanged);
+    CartStore.instance.removeListener(_onStoreChanged);
+    super.dispose();
+  }
+
+  void _onStoreChanged() {
+    if (mounted) setState(() {});
   }
 
   Future<void> _openFilters() async {
@@ -55,10 +66,14 @@ class _HomeScreenState extends State<HomeScreen> {
         final product = products[index];
         return ProductCard(
           product: product,
-          isFavorite: _favoriteProductIds.contains(product.id),
-          onFavoriteTap: () => _toggleFavorite(product.id),
+          isFavorite: WishlistStore.instance.isFavorite(product.id),
+          onFavoriteTap: () => WishlistStore.instance.toggle(product),
           onTap: () {
-            // TODO: Navigate to Product Details screen
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => ProductDetailsScreen(product: product),
+              ),
+            );
           },
         );
       },
@@ -113,34 +128,42 @@ class _HomeScreenState extends State<HomeScreen> {
                       'Auvera',
                       style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 20),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: AppColors.cardWhite,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          const Icon(Icons.shopping_bag_outlined, size: 20, color: AppColors.textPrimary),
-                          Positioned(
-                            top: -4,
-                            right: -4,
-                            child: Container(
-                              padding: const EdgeInsets.all(3),
-                              decoration: const BoxDecoration(
-                                color: AppColors.primary,
-                                shape: BoxShape.circle,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const CartScreen()),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: AppColors.cardWhite,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            const Icon(Icons.shopping_bag_outlined, size: 20, color: AppColors.textPrimary),
+                            if (CartStore.instance.itemCount > 0)
+                              Positioned(
+                                top: -4,
+                                right: -4,
+                                child: Container(
+                                  padding: const EdgeInsets.all(3),
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.primary,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                                  child: Text(
+                                    '${CartStore.instance.itemCount}',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.w700),
+                                  ),
+                                ),
                               ),
-                              constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
-                              child: const Text(
-                                '2',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],

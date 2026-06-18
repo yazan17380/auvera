@@ -56,8 +56,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (value == null || value.isEmpty) {
       return 'Password is required';
     }
-    if (value.length < 6) {
-      return 'Password must be at least 6 characters';
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters';
     }
     return null;
   }
@@ -76,7 +76,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
-      // Placeholder for future backend integration (create account + send OTP)
+      // Backend integration note:
+      // POST /api/register expects exactly:
+      // { first_name, last_name, email, password, password_confirmation }
+      // password min length is 8 (validated above) and must match
+      // password_confirmation (send _confirmPasswordController.text as that field).
       Future.delayed(const Duration(seconds: 1), () {
         if (!mounted) return;
         setState(() => _isLoading = false);

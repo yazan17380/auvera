@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../theme/app_theme.dart';
-import 'main_navigation_screen.dart';
+import 'set_new_password_screen.dart';
 
-class OtpVerificationScreen extends StatefulWidget {
+/// Step 2 of the Forgot Password flow.
+///
+/// Backend contract: POST /api/verify-reset-otp expects { "otp": "123456" }
+/// (no email field needed). On success it returns a temporary reset token:
+/// { "message": "...", "token": "..." }.
+/// That token must be sent as a Bearer token on the next step
+/// (POST /api/reset-password) - it is NOT a normal login session.
+class ResetOtpScreen extends StatefulWidget {
   final String email;
 
-  const OtpVerificationScreen({super.key, required this.email});
+  const ResetOtpScreen({super.key, required this.email});
 
   @override
-  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
+  State<ResetOtpScreen> createState() => _ResetOtpScreenState();
 }
 
-class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+class _ResetOtpScreenState extends State<ResetOtpScreen> {
   static const int _otpLength = 6;
   static const int _resendSeconds = 60;
 
@@ -38,9 +45,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     Future.doWhile(() async {
       await Future.delayed(const Duration(seconds: 1));
       if (!mounted) return false;
-      setState(() {
-        _secondsRemaining--;
-      });
+      setState(() => _secondsRemaining--);
       if (_secondsRemaining <= 0) {
         setState(() => _canResend = true);
         return false;
@@ -66,16 +71,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     if (_hasError) {
       setState(() => _hasError = false);
     }
-
     if (value.isNotEmpty && index < _otpLength - 1) {
       _focusNodes[index + 1].requestFocus();
     }
-
     if (value.isEmpty && index > 0) {
       _focusNodes[index - 1].requestFocus();
     }
-
-    // Auto-submit once all digits are filled
     if (_enteredCode.length == _otpLength) {
       _handleVerify();
     }
@@ -93,9 +94,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     });
 
     // Backend integration note:
-    // POST /api/verify-otp expects { "otp": "123456" } only (no email field).
-    // On success it returns { token, role, user } - store the token and
-    // navigate straight into the app (user is auto-logged-in after verification).
+    // POST /api/verify-reset-otp with { "otp": _enteredCode }
+    // On success: store response.token (temporary reset token) and pass it
+    // to SetNewPasswordScreen - it's required as a Bearer token for the
+    // final POST /api/reset-password call.
     Future.delayed(const Duration(seconds: 1), () {
       if (!mounted) return;
       setState(() => _isLoading = false);
@@ -103,12 +105,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       // Mock validation - replace with real API check later
       const mockValidCode = '123456';
       if (_enteredCode == mockValidCode) {
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
-          (route) => false,
-        );
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Email verified successfully')),
+        const mockResetToken = 'mock-reset-token'; // comes from API response.token
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => SetNewPasswordScreen(resetToken: mockResetToken),
+          ),
         );
       } else {
         setState(() => _hasError = true);
@@ -130,6 +131,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     _focusNodes[0].requestFocus();
     _startResendTimer();
 
+    // Backend integration note: re-call POST /api/forgot-password with the
+    // same email to receive a new OTP code.
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Verification code resent')),
     );
@@ -208,7 +211,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   children: [
                     const SizedBox(height: 12),
                     Text(
-                      'Verify Your Email',
+                      'Verify Code',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     const SizedBox(height: 10),
@@ -217,7 +220,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         style: Theme.of(context).textTheme.bodyMedium,
                         children: [
                           const TextSpan(
-                            text: 'We sent a 6-digit verification code to\n',
+                            text: 'Enter the 6-digit code sent to\n',
                           ),
                           TextSpan(
                             text: widget.email,
@@ -243,7 +246,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     if (_hasError) ...[
                       const SizedBox(height: 12),
                       Text(
-                        'Invalid code. Please try again.',
+                        'Invalid or expired code.',
                         style: TextStyle(
                           color: AppColors.error,
                           fontSize: 13,

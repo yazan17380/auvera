@@ -82,15 +82,15 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   }
 
   void _handleVerify() {
-    if (_enteredCode.length < _otpLength) {
-      setState(() => _hasError = true);
-      return;
-    }
+  if (_enteredCode.length < _otpLength) {
+    setState(() => _hasError = true);
+    return;
+  }
 
-    setState(() {
-      _isLoading = true;
-      _hasError = false;
-    });
+  setState(() {
+    _isLoading = true;
+    _hasError = false;
+  });
 
     
     

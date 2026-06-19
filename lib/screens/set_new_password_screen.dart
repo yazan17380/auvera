@@ -52,9 +52,8 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
 
     setState(() => _isLoading = true);
 
-    // Backend integration note:
-    // POST /api/reset-password with header Authorization: Bearer widget.resetToken
-    // Body: { "password": ..., "password_confirmation": ... }
+     // replace this with a real API Call 
+     
     Future.delayed(const Duration(seconds: 1), () {
       if (!mounted) return;
       setState(() => _isLoading = false);

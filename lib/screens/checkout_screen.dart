@@ -38,7 +38,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     setState(() => _isLoading = true);
 
-    
+    // replace this with a real API Call 
     Future.delayed(const Duration(seconds: 1), () {
       if (!mounted) return;
       setState(() => _isLoading = false);

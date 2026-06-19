@@ -93,12 +93,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   });
 
     
-    
+  
+  // replace this with a real API Call 
+    /*
     Future.delayed(const Duration(seconds: 1), () {
       if (!mounted) return;
       setState(() => _isLoading = false);
 
-      // Mock validation - replace with real API check later
+      
       const mockValidCode = '123456';
       if (_enteredCode == mockValidCode) {
         Navigator.of(context).pushAndRemoveUntil(
@@ -115,7 +117,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         }
         _focusNodes[0].requestFocus();
       }
-    });
+    }); */
   }
 
   void _handleResend() {

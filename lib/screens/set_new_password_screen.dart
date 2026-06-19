@@ -3,12 +3,7 @@ import '../theme/app_theme.dart';
 import '../widgets/auth_text_field.dart';
 import 'login_screen.dart';
 
-/// Step 3 (final) of the Forgot Password flow.
-///
-/// Backend contract: POST /api/reset-password requires Authorization:
-/// Bearer {resetToken} (the temporary token returned by verify-reset-otp).
-/// Body only needs { "password": "...", "password_confirmation": "..." }
-/// - no email or otp field here.
+
 class SetNewPasswordScreen extends StatefulWidget {
   final String resetToken;
 

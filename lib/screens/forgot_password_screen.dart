@@ -36,8 +36,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
-      // Backend integration note:
-      // POST /api/forgot-password with { "email": _emailController.text }
+      
+      // POST /api/forgot-password with () "email": _emailController.text )
+
       Future.delayed(const Duration(seconds: 1), () {
         if (!mounted) return;
         setState(() => _isLoading = false);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// Placeholder - full Categories screen will be built later.
+/// full Categories screen will be built later.
+
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 

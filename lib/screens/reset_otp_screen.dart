@@ -3,13 +3,8 @@ import 'package:flutter/services.dart';
 import '../theme/app_theme.dart';
 import 'set_new_password_screen.dart';
 
-/// Step 2 of the Forgot Password flow.
-///
-/// Backend contract: POST /api/verify-reset-otp expects { "otp": "123456" }
-/// (no email field needed). On success it returns a temporary reset token:
-/// { "message": "...", "token": "..." }.
-/// That token must be sent as a Bearer token on the next step
-/// (POST /api/reset-password) - it is NOT a normal login session.
+
+
 class ResetOtpScreen extends StatefulWidget {
   final String email;
 
@@ -93,11 +88,7 @@ class _ResetOtpScreenState extends State<ResetOtpScreen> {
       _hasError = false;
     });
 
-    // Backend integration note:
-    // POST /api/verify-reset-otp with { "otp": _enteredCode }
-    // On success: store response.token (temporary reset token) and pass it
-    // to SetNewPasswordScreen - it's required as a Bearer token for the
-    // final POST /api/reset-password call.
+    
     Future.delayed(const Duration(seconds: 1), () {
       if (!mounted) return;
       setState(() => _isLoading = false);
@@ -131,8 +122,7 @@ class _ResetOtpScreenState extends State<ResetOtpScreen> {
     _focusNodes[0].requestFocus();
     _startResendTimer();
 
-    // Backend integration note: re-call POST /api/forgot-password with the
-    // same email to receive a new OTP code.
+    
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Verification code resent')),
     );

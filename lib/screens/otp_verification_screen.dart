@@ -92,10 +92,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       _hasError = false;
     });
 
-    // Backend integration note:
-    // POST /api/verify-otp expects { "otp": "123456" } only (no email field).
-    // On success it returns { token, role, user } - store the token and
-    // navigate straight into the app (user is auto-logged-in after verification).
+    
+    
     Future.delayed(const Duration(seconds: 1), () {
       if (!mounted) return;
       setState(() => _isLoading = false);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// Auvera App Color Palette
-/// Inspired by a soft, elegant dusty-pink & mocha aesthetic
+
 class AppColors {
   AppColors._();
 

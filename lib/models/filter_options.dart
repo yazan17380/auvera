@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Color swatch option used in the product filter
+
 class ColorOption {
   final String name;
   final Color color;
@@ -8,7 +8,7 @@ class ColorOption {
   const ColorOption({required this.name, required this.color});
 }
 
-/// Mock color options for filtering (matches backend's `color` query param)
+
 final List<ColorOption> mockColorOptions = [
   const ColorOption(name: 'Black', color: Color(0xFF1A1A1A)),
   const ColorOption(name: 'White', color: Color(0xFFFFFFFF)),
@@ -20,5 +20,5 @@ final List<ColorOption> mockColorOptions = [
   const ColorOption(name: 'Pink', color: Color(0xFFE8A4B0)),
 ];
 
-/// Mock size options for filtering (matches backend's `size` query param)
+
 final List<String> mockSizeOptions = ['S', 'M', 'L', 'XL'];

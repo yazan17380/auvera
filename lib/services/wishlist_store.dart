@@ -1,15 +1,8 @@
 import 'package:flutter/foundation.dart';
 import '../models/product.dart';
 
-/// Simple in-memory wishlist store shared across screens.
-///
-/// Backend integration note: the backend's Wishlist endpoints
-/// (GET /user/wishlist, POST /user/wishlist/toggle) exist in
-/// WishlistController but are NOT YET registered in routes/api.php -
-/// calling them today returns 404. Once the backend adds those routes,
-/// replace the methods below with real API calls (the toggle endpoint
-/// returns { message, wishlisted: bool }) and keep this same public
-/// interface so the UI doesn't need to change.
+
+
 class WishlistStore extends ChangeNotifier {
   WishlistStore._internal();
   static final WishlistStore instance = WishlistStore._internal();

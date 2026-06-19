@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Category data model
-/// NOTE: icon is a local placeholder until real category images/icons
-/// are available from the backend.
+
 class Category {
   final int id;
   final String name;

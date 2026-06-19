@@ -4,12 +4,7 @@ import '../models/cart_item.dart';
 import '../services/cart_store.dart';
 import 'checkout_screen.dart';
 
-/// Backend integration note: Cart endpoints (CartController: index,
-/// addOrUpdate, updateQuantity, remove, clear) exist but are NOT YET
-/// registered in routes/api.php. This screen reads from CartStore (local,
-/// in-memory) for now. Once GET /user/cart, PUT /user/cart/{id} and
-/// DELETE /user/cart/{id} routes are added, swap CartStore's internals for
-/// real API calls.
+
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 

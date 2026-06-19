@@ -76,11 +76,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
-      // Backend integration note:
-      // POST /api/register expects exactly:
-      // { first_name, last_name, email, password, password_confirmation }
-      // password min length is 8 (validated above) and must match
-      // password_confirmation (send _confirmPasswordController.text as that field).
+      
+      
       Future.delayed(const Duration(seconds: 1), () {
         if (!mounted) return;
         setState(() => _isLoading = false);

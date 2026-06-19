@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Simple data model for a single onboarding slide
+
 class OnboardingItem {
   final String title;
   final String description;

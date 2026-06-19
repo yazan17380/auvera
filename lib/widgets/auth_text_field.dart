@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
-/// Reusable labeled text field used across Auth screens
-/// (Login, Sign Up, Forgot Password, etc.)
+
 class AuthTextField extends StatefulWidget {
   final String label;
   final String hintText;

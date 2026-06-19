@@ -4,11 +4,8 @@ import '../services/wishlist_store.dart';
 import '../widgets/product_card.dart';
 import 'product_details_screen.dart';
 
-/// Backend integration note: Wishlist endpoints (WishlistController: index,
-/// toggle) exist but are NOT YET registered in routes/api.php. This screen
-/// reads from WishlistStore (local, in-memory) for now. Once GET
-/// /user/wishlist and POST /user/wishlist/toggle routes are added, swap
-/// WishlistStore's internals for real API calls.
+
+
 class WishlistScreen extends StatefulWidget {
   const WishlistScreen({super.key});
 

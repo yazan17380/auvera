@@ -3,10 +3,7 @@ import '../theme/app_theme.dart';
 import '../services/cart_store.dart';
 import 'main_navigation_screen.dart';
 
-/// Backend integration note: POST /user/checkout expects exactly:
-/// { address: string, payment_method: "cash"|"card", notes?: string,
-///   items: [{ product_id, variant_id (nullable), quantity }] }
-/// On success it returns { status, message, order_id }.
+
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
 
@@ -41,10 +38,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     setState(() => _isLoading = true);
 
-    // Backend integration note: build the items array exactly as
-    // { product_id: item.product.id, variant_id: null, quantity: item.quantity }
-    // (variant_id is nullable per backend validation - send null unless you
-    // resolve the matching ProductVariant id for the chosen size/color).
+    
     Future.delayed(const Duration(seconds: 1), () {
       if (!mounted) return;
       setState(() => _isLoading = false);

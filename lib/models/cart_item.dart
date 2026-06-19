@@ -1,11 +1,6 @@
 import 'product.dart';
 
-/// Cart item data model.
-/// Mirrors the backend's CartService logic: a cart item is identified by
-/// (product_id, size, color) and holds a quantity.
-/// NOTE: backend's CartItem fillable currently only lists
-/// [user_id, product_id, quantity] while CartService also reads/writes
-/// size and color - this model follows the service's intended shape.
+
 class CartItem {
   final Product product;
   final String? size;

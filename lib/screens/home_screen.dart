@@ -40,8 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final result = await FilterBottomSheet.show(context, initialFilter: _activeFilter);
     if (result != null) {
       setState(() => _activeFilter = result);
-      // TODO: once connected, re-fetch products from backend using
-      // result.category, result.color, result.size, result.priceRange
+      
+      
     }
   }
 

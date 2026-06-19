@@ -2,22 +2,8 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../models/review.dart';
 
-/// Reviews section shown on Product Details.
-///
-/// Backend integration note: ReviewController->store() uses
-/// updateOrCreate(['user_id', 'product_id'], [...]) - meaning the backend
-/// already enforces "one review per user per product": submitting again
-/// updates the existing row instead of creating a duplicate. This UI
-/// mirrors that behavior locally: if the current user already has a
-/// review for this product, the action becomes "Edit Your Review" and the
-/// sheet opens pre-filled, replacing the old entry instead of inserting
-/// a new one.
-///
-/// Routes are NOT YET registered in routes/api.php - calling POST /reviews
-/// or GET /reviews/{productId} today returns 404. Also note the backend
-/// only allows POST /reviews if the user has an order with
-/// status == 'delivered' containing this product - the UI should be ready
-/// to surface that 403 error message once connected.
+
+
 class ReviewsSection extends StatefulWidget {
   final int productId;
 
@@ -30,8 +16,7 @@ class ReviewsSection extends StatefulWidget {
 class _ReviewsSectionState extends State<ReviewsSection> {
   late List<Review> _reviews;
 
-  // Mock current user identity (no real auth/session wired yet).
-  // Once connected, compare by the logged-in user's id instead of name.
+  
   static const String _currentUserName = 'You';
 
   @override
@@ -67,7 +52,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
 
     setState(() {
       if (existingReview != null) {
-        // Backend behavior mirrored: replace, don't duplicate.
+        
         final index = _reviews.indexOf(existingReview);
         _reviews[index] = result;
       } else {
@@ -234,13 +219,7 @@ class _AddReviewSheetState extends State<_AddReviewSheet> {
   void _submit() {
     if (_selectedRating == 0) return;
 
-    // Backend integration note: POST /reviews with
-    // { product_id: widget.productId, rating: _selectedRating, comment }
-    // The backend uses updateOrCreate(['user_id','product_id'], [...]) so
-    // sending this again for the same product updates the existing review
-    // server-side - no duplicate handling needed on that end.
-    // Server responds 403 if the user hasn't received a delivered order
-    // containing this product - surface that message to the user once wired.
+    
     Navigator.of(context).pop(
       Review(
         id: widget.existingReview?.id ?? DateTime.now().millisecondsSinceEpoch,

@@ -1,7 +1,4 @@
-/// Product data model
-/// NOTE: Fields are inferred logically (image, name, price, rating...)
-/// since the backend's actual JSON response shape wasn't provided yet.
-/// Update this model once the real API response is available.
+
 class Product {
   final int id;
   final String name;
@@ -31,17 +28,18 @@ class Product {
 
   bool get hasDiscount => oldPrice != null && oldPrice! > price;
 
-  /// Falls back to the single [imageUrl] if no gallery images are provided
+  
   List<String> get gallery => images.isNotEmpty ? images : [imageUrl];
 
-  /// Falls back to a generic description if none was provided
+  
   String get displayDescription => description.isNotEmpty
       ? description
       : 'A carefully selected piece from our $categoryName collection, '
           'combining quality materials with a comfortable, modern fit.';
 }
 
-/// Mock product data for UI building (no backend connection yet)
+// (no backend connection yet)
+
 final List<Product> mockProducts = [
   const Product(
     id: 1,

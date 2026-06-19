@@ -37,14 +37,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
     setState(() => _showSelectionError = false);
 
-    // Backend integration note:
-    // Cart endpoints exist in the backend (CartController: index, addOrUpdate,
-    // updateQuantity, remove, clear) but are not yet registered in api.php's
-    // routes, so POST /user/cart is not callable yet. CartStore currently
-    // keeps this in memory locally - once the route is added, replace
-    // CartStore's internals with real API calls (POST body should be
-    // { product_id, quantity, size, color }) while keeping the same
-    // public interface so this screen doesn't need to change.
+    
     CartStore.instance.addItem(
       widget.product,
       size: _selectedSize,

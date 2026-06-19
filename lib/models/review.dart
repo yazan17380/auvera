@@ -1,8 +1,4 @@
-/// Review data model.
-/// Mirrors backend's Review model fields exactly: user_id, product_id,
-/// rating (integer 1-5), comment.
-/// NOTE: backend only allows submitting a review for a product the user
-/// has actually purchased AND received (order.status == 'delivered').
+
 class Review {
   final int id;
   final String userName;
@@ -21,9 +17,7 @@ class Review {
   });
 }
 
-/// Mock reviews for UI building (no backend connection yet - the
-/// /reviews endpoints exist in ReviewController but are not yet
-/// registered in routes/api.php)
+
 final Map<int, List<Review>> mockReviewsByProductId = {
   1: [
     Review(

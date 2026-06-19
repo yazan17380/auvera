@@ -2,14 +2,8 @@ import 'package:flutter/foundation.dart';
 import '../models/cart_item.dart';
 import '../models/product.dart';
 
-/// Simple in-memory cart store shared across screens.
-///
-/// Backend integration note: the backend's Cart endpoints
-/// (GET/POST /user/cart, PUT /user/cart/{id}, DELETE /user/cart/{id},
-/// DELETE /user/cart) exist in CartController but are NOT YET registered
-/// in routes/api.php - calling them today returns 404. Once the backend
-/// adds those routes, replace the methods below with real API calls and
-/// keep this same public interface so the UI doesn't need to change.
+
+
 class CartStore extends ChangeNotifier {
   CartStore._internal();
   static final CartStore instance = CartStore._internal();

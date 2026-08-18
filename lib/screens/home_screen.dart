@@ -7,6 +7,7 @@ import '../services/wishlist_store.dart';
 import '../services/cart_store.dart';
 import 'product_details_screen.dart';
 import 'cart_screen.dart';
+import 'notifications_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -46,10 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   bool get _hasActiveFilter =>
-      _activeFilter != null &&
-      (_activeFilter!.category != null ||
-          _activeFilter!.color != null ||
-          _activeFilter!.size != null);
+      _activeFilter != null && _activeFilter!.hasActiveFilter;
 
   Widget _buildProductGrid(List<Product> products) {
     return GridView.builder(
@@ -128,18 +126,35 @@ class _HomeScreenState extends State<HomeScreen> {
                       'Auvera',
                       style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 20),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => const CartScreen()),
-                        );
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: AppColors.cardWhite,
-                          borderRadius: BorderRadius.circular(12),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(builder: (_) => const NotificationsScreen()),
+                          ),
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.cardWhite,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Icon(Icons.notifications_none_rounded,
+                                size: 20, color: AppColors.textPrimary),
+                          ),
                         ),
+                        const SizedBox(width: 8),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (_) => const CartScreen()),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.cardWhite,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                         child: Stack(
                           clipBehavior: Clip.none,
                           children: [
@@ -165,6 +180,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
+                    ),
+                      ],
                     ),
                   ],
                 ),

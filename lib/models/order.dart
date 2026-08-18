@@ -41,6 +41,9 @@ class Order {
 
   bool get canEdit => status == 'pending';
   bool get canCancel => status == 'pending' || status == 'processing';
+
+  
+  bool get canRefund => status == 'delivered';
 }
 
 final List<Order> mockOrders = [

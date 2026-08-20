@@ -16,11 +16,11 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
   String _selectedStatus = 'all';
 
   static const List<Map<String, String>> _tabs = [
-    {'value': 'all', 'label': 'All'},
-    {'value': 'pending', 'label': 'Pending'},
-    {'value': 'processing', 'label': 'Processing'},
-    {'value': 'delivered', 'label': 'Delivered'},
-    {'value': 'canceled', 'label': 'Canceled'},
+    {'value': 'all',         'label': 'All'},
+    {'value': 'pending',     'label': 'Pending'},
+    {'value': 'on_the_way',  'label': 'On The Way'},
+    {'value': 'delivered',   'label': 'Delivered'},
+    {'value': 'canceled',    'label': 'Canceled'},
   ];
 
   @override
@@ -47,21 +47,33 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
 
   Color _statusColor(String status) {
     switch (status) {
-      case 'pending': return const Color(0xFFE8A23D);
-      case 'processing': return AppColors.primary;
-      case 'delivered': return AppColors.success;
-      case 'canceled': return AppColors.error;
-      default: return AppColors.textHint;
+      case 'pending':         return const Color(0xFFE8A23D);
+      case 'assigned':        return AppColors.primary;
+      case 'waiting_delivery': return const Color(0xFF2196F3);
+      case 'waiting_stock':   return const Color(0xFF9C27B0);
+      case 'on_the_way':      return const Color(0xFF2196F3);
+      case 'delivered':       return AppColors.success;
+      case 'canceled':        return AppColors.error;
+      case 'returned':        return AppColors.error;
+      case 'accepted':        return AppColors.success;
+      case 'rejected':        return AppColors.error;
+      default:                 return AppColors.textHint;
     }
   }
 
   String _statusLabel(String status) {
     switch (status) {
-      case 'pending': return 'Pending';
-      case 'processing': return 'Processing';
-      case 'delivered': return 'Delivered';
-      case 'canceled': return 'Canceled';
-      default: return status;
+      case 'pending':         return 'Pending';
+      case 'assigned':        return 'Assigned';
+      case 'waiting_delivery': return 'Waiting Delivery';
+      case 'waiting_stock':   return 'Waiting Stock';
+      case 'on_the_way':      return 'On The Way';
+      case 'delivered':       return 'Delivered';
+      case 'canceled':        return 'Canceled';
+      case 'returned':        return 'Returned';
+      case 'accepted':        return 'Accepted';
+      case 'rejected':        return 'Rejected';
+      default:                 return status;
     }
   }
 

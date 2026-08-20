@@ -32,11 +32,33 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   Color _statusColor(String s) {
     switch (s) {
-      case 'pending': return const Color(0xFFE8A23D);
-      case 'processing': return AppColors.primary;
-      case 'delivered': return AppColors.success;
-      case 'canceled': return AppColors.error;
-      default: return AppColors.textHint;
+      case 'pending':          return const Color(0xFFE8A23D);
+      case 'assigned':         return AppColors.primary;
+      case 'waiting_delivery':  return const Color(0xFF2196F3);
+      case 'waiting_stock':    return const Color(0xFF9C27B0);
+      case 'on_the_way':       return const Color(0xFF2196F3);
+      case 'delivered':        return AppColors.success;
+      case 'canceled':         return AppColors.error;
+      case 'returned':         return AppColors.error;
+      case 'accepted':         return AppColors.success;
+      case 'rejected':         return AppColors.error;
+      default:                  return AppColors.textHint;
+    }
+  }
+
+  String _statusLabelText(String status) {
+    switch (status) {
+      case 'pending':          return 'Pending';
+      case 'assigned':         return 'Assigned';
+      case 'waiting_delivery':  return 'Waiting Delivery';
+      case 'waiting_stock':    return 'Waiting Stock';
+      case 'on_the_way':       return 'On The Way';
+      case 'delivered':        return 'Delivered';
+      case 'canceled':         return 'Canceled';
+      case 'returned':         return 'Returned';
+      case 'accepted':         return 'Accepted';
+      case 'rejected':         return 'Rejected';
+      default:                  return status;
     }
   }
 
@@ -195,7 +217,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        order.status[0].toUpperCase() + order.status.substring(1),
+                        _statusLabelText(order.status),
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700,
                             color: _statusColor(order.status)),
                       ),

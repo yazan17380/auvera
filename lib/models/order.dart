@@ -21,8 +21,8 @@ class OrderItemEntry {
 class Order {
   final int id;
   final double totalPrice;
-  final String status; // pending, processing, delivered, canceled
-  final String paymentMethod; // 'cash' or 'card'
+  final String status;
+  final String paymentMethod;
   final String address;
   final String? notes;
   final DateTime createdAt;
@@ -39,10 +39,9 @@ class Order {
     this.items = const [],
   });
 
-  bool get canEdit => status == 'pending';
-  bool get canCancel => status == 'pending' || status == 'processing';
-
   
+  bool get canEdit => status == 'pending' || status == 'waiting_delivery';
+  bool get canCancel => status == 'pending' || status == 'waiting_delivery' || status == 'waiting_stock';
   bool get canRefund => status == 'delivered';
 }
 
@@ -75,7 +74,7 @@ final List<Order> mockOrders = [
   Order(
     id: 98,
     totalPrice: 65,
-    status: 'processing',
+    status: 'assigned',
     paymentMethod: 'card',
     address: 'Damascus, Syria',
     createdAt: DateTime(2026, 6, 28),

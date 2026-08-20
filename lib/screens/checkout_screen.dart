@@ -15,7 +15,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _notesController = TextEditingController();
-  String _paymentMethod = 'cash'; // backend only accepts 'cash' or 'card'
+  String _paymentMethod = 'cash';
   bool _isLoading = false;
 
   @override
@@ -117,10 +117,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: _PaymentOption(
-                              label: 'Card',
-                              icon: Icons.credit_card_outlined,
-                              isSelected: _paymentMethod == 'card',
-                              onTap: () => setState(() => _paymentMethod = 'card'),
+                              label: 'Wallet',
+                              icon: Icons.account_balance_wallet_outlined,
+                              isSelected: _paymentMethod == 'wallet',
+                              onTap: () => setState(() => _paymentMethod = 'wallet'),
                             ),
                           ),
                         ],
